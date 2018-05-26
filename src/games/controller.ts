@@ -1,15 +1,15 @@
-import { JsonController, Get, Param, Body, Post, HttpCode } from 'routing-controllers'
+import { JsonController, Get, Param, Body, Post, HttpCode, Put } from 'routing-controllers'
 import Game from './entity'
 
 @JsonController()
 export default class GameController {
 
-    // @Get('/advertisements/:id')
-    // getAdvertisements(
-    //     @Param('id') id: number
-    // ) {
-    //     return Advertisement.findOne(id)    
-    // }
+    @Put('/games/:id')
+    getGames(
+        @Param('id') id: number
+    ) {
+        return Game.findOne(id)    
+    }
 
     @Get('/games')
     async allGames() {
@@ -23,7 +23,7 @@ export default class GameController {
         @Body() game: Game
     ) {
         game.color = randomColor();
-        game.board = { board:[['o', 'o', 'o'], ['o', 'o', 'o'], ['o', 'o', 'o']]}
+        // game.board = { board:[['o', 'o', 'o'], ['o', 'o', 'o'], ['o', 'o', 'o']]}
         return game.save()
     }
 }
@@ -32,13 +32,6 @@ const colors = ["red", "blue", "green", "yellow", "magenta"]
 const randomColor = () => {
   return colors[Math.floor(Math.random() * colors.length)];
 }
-
-// const defaultBoard = [
-// 	['o', 'o', 'o'],
-// 	['o', 'o', 'o'],
-// 	['o', 'o', 'o']
-// ]
-
 
 
 // var random = colors[Math.floor(Math.random() * colors.length)]

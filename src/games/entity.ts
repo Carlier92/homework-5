@@ -3,6 +3,8 @@ import { Entity, PrimaryGeneratedColumn, Column} from 'typeorm'
 import { BaseEntity } from 'typeorm/repository/BaseEntity'
 import { IsString, Length, MinLength, IsNumber } from 'class-validator'
 
+const boardDefault = {board:[['o', 'o', 'o'], ['o', 'o', 'o'], ['o', 'o', 'o']]}
+
 @Entity()
 export default class Game extends BaseEntity {
 
@@ -16,7 +18,7 @@ export default class Game extends BaseEntity {
   @Column('text', {nullable:false})
   color: string
 
-  @Column('json', {nullable:true})
-  board: {board: string[][]
+  @Column('json', {nullable:false, default: boardDefault })
+  board: {board: string[][]}
 
 }

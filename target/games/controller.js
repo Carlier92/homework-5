@@ -15,16 +15,25 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const routing_controllers_1 = require("routing-controllers");
 const entity_1 = require("./entity");
 let GameController = class GameController {
+    getGames(id) {
+        return entity_1.default.findOne(id);
+    }
     async allGames() {
         const games = await entity_1.default.find();
         return { games };
     }
     createGames(game) {
         game.color = randomColor();
-        game.board = { board: [['o', 'o', 'o'], ['o', 'o', 'o'], ['o', 'o', 'o']] };
         return game.save();
     }
 };
+__decorate([
+    routing_controllers_1.Put('/games/:id'),
+    __param(0, routing_controllers_1.Param('id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number]),
+    __metadata("design:returntype", void 0)
+], GameController.prototype, "getGames", null);
 __decorate([
     routing_controllers_1.Get('/games'),
     __metadata("design:type", Function),
