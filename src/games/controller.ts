@@ -17,15 +17,23 @@ export default class GameController {
       return { games }
     }
 
-    // @Post('/advertisements')
-    // @HttpCode(201)
-    //     createAdvertisement(
-    //     @Body() advertisement: Advertisement
-    // ) {
-    //     return advertisement.save()
-    // }
+    @Post('/games')
+    @HttpCode(201)
+    
+        createGames(
+
+        @Body() game: Game
+    ) {
+        console.log("game");
+
+        return game.save()
+    }
 
 }
+
+const colors = ["red", "blue", "green", "yellow", "magenta"]
+var random = colors[Math.floor(Math.random() * colors.length)]
+
 
 // insert into games (name, color, board) values
 //   ('Game 2.0', 'pink', 0);

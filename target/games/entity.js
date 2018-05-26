@@ -26,8 +26,8 @@ __decorate([
     __metadata("design:type", String)
 ], Game.prototype, "color", void 0);
 __decorate([
-    typeorm_1.Column('text', { nullable: false }),
-    __metadata("design:type", String)
+    typeorm_1.Column('json', { nullable: true }),
+    __metadata("design:type", Object)
 ], Game.prototype, "board", void 0);
 Game = __decorate([
     typeorm_1.Entity()
