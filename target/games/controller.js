@@ -20,7 +20,8 @@ let GameController = class GameController {
         return { games };
     }
     createGames(game) {
-        console.log("game");
+        game.color = randomColor();
+        game.board = { board: [['o', 'o', 'o'], ['o', 'o', 'o'], ['o', 'o', 'o']] };
         return game.save();
     }
 };
@@ -43,5 +44,7 @@ GameController = __decorate([
 ], GameController);
 exports.default = GameController;
 const colors = ["red", "blue", "green", "yellow", "magenta"];
-var random = colors[Math.floor(Math.random() * colors.length)];
+const randomColor = () => {
+    return colors[Math.floor(Math.random() * colors.length)];
+};
 //# sourceMappingURL=controller.js.map

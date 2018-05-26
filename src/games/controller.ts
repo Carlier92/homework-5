@@ -19,20 +19,30 @@ export default class GameController {
 
     @Post('/games')
     @HttpCode(201)
-    
         createGames(
-
         @Body() game: Game
     ) {
-        console.log("game");
-
+        game.color = randomColor();
+        game.board = { board:[['o', 'o', 'o'], ['o', 'o', 'o'], ['o', 'o', 'o']]}
         return game.save()
     }
-
 }
 
 const colors = ["red", "blue", "green", "yellow", "magenta"]
-var random = colors[Math.floor(Math.random() * colors.length)]
+const randomColor = () => {
+  return colors[Math.floor(Math.random() * colors.length)];
+}
+
+// const defaultBoard = [
+// 	['o', 'o', 'o'],
+// 	['o', 'o', 'o'],
+// 	['o', 'o', 'o']
+// ]
+
+
+
+// var random = colors[Math.floor(Math.random() * colors.length)]
+// console.log(colors)
 
 
 // insert into games (name, color, board) values
