@@ -1,7 +1,7 @@
 import { JsonController, Get, Param, Body, Post, HttpCode, Put, NotFoundError, BadRequestError } from 'routing-controllers'
 import Game from './entity'
 
-const colors = ["red", "blue", "green", "yellow", "magenta"]
+export const colors = ["red", "blue", "green", "yellow", "magenta"]
 const randomColor = () => {
   return colors[Math.floor(Math.random() * colors.length)]
 }
@@ -21,8 +21,7 @@ export default class GameController {
         @Body() update: Partial<Game>
     ) {
         const game = await Game.findOne(id)
-
-        if (!game) throw new NotFoundError('Cannot find page')
+        if (!game) throw new NotFoundError('Cannot find game')
 
         if (update.board && moves(game.board, update.board) > 1) {
           throw new BadRequestError(`Too much, stahp.`)

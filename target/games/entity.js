@@ -12,6 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const typeorm_1 = require("typeorm");
 const BaseEntity_1 = require("typeorm/repository/BaseEntity");
 const class_validator_1 = require("class-validator");
+const controller_1 = require("./controller");
 const boardDefault = { board: [['o', 'o', 'o'], ['o', 'o', 'o'], ['o', 'o', 'o']] };
 let Game = class Game extends BaseEntity_1.BaseEntity {
 };
@@ -25,6 +26,7 @@ __decorate([
     __metadata("design:type", String)
 ], Game.prototype, "name", void 0);
 __decorate([
+    class_validator_1.IsIn(controller_1.colors, { message: "Already had this one." }),
     typeorm_1.Column('text', { nullable: false }),
     __metadata("design:type", String)
 ], Game.prototype, "color", void 0);
