@@ -1,7 +1,7 @@
 // src/pages/entity.ts
 import { Entity, PrimaryGeneratedColumn, Column} from 'typeorm'
 import { BaseEntity } from 'typeorm/repository/BaseEntity'
-import { IsString, Length, MinLength, IsNumber } from 'class-validator'
+import { IsString } from 'class-validator'
 
 const boardDefault = {board:[['o', 'o', 'o'], ['o', 'o', 'o'], ['o', 'o', 'o']]}
 

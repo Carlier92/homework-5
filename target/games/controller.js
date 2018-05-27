@@ -18,12 +18,18 @@ const colors = ["red", "blue", "green", "yellow", "magenta"];
 const randomColor = () => {
     return colors[Math.floor(Math.random() * colors.length)];
 };
+const moves = (board1, board2) => board1
+    .map((row, y) => row.filter((cell, x) => board2[y][x] !== cell))
+    .reduce((a, b) => a.concat(b))
+    .length;
 let GameController = class GameController {
     async updateGame(id, update) {
         const game = await entity_1.default.findOne(id);
         if (!game)
             throw new routing_controllers_1.NotFoundError('Cannot find page');
-        game.color = randomColor();
+        if (update.board && moves(game.board, update.board) > 1) {
+            throw new routing_controllers_1.BadRequestError(`Too much, stahp.`);
+        }
         return entity_1.default.merge(game, update).save();
     }
     async allGames() {

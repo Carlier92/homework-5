@@ -1,16 +1,16 @@
-import { JsonController, Get, Param, Body, Post, HttpCode, Put, NotFoundError } from 'routing-controllers'
+import { JsonController, Get, Param, Body, Post, HttpCode, Put, NotFoundError, BadRequestError } from 'routing-controllers'
 import Game from './entity'
 
 const colors = ["red", "blue", "green", "yellow", "magenta"]
 const randomColor = () => {
-  return colors[Math.floor(Math.random() * colors.length)];
+  return colors[Math.floor(Math.random() * colors.length)]
 }
 
-// const moves = (board1, board2) => 
-//   board1
-//     .map((row, y) => row.filter((cell, x) => board2[y][x] !== cell))
-//     .reduce((a, b) => a.concat(b))
-//     .length
+const moves = (board1, board2) => 
+  board1
+    .map((row, y) => row.filter((cell, x) => board2[y][x] !== cell))
+    .reduce((a, b) => a.concat(b))
+    .length
 
 @JsonController()
 export default class GameController {
@@ -21,10 +21,13 @@ export default class GameController {
         @Body() update: Partial<Game>
     ) {
         const game = await Game.findOne(id)
+
         if (!game) throw new NotFoundError('Cannot find page')
 
-        game.color = randomColor();
-        return Game.merge(game, update).save()
+        if (update.board && moves(game.board, update.board) > 1) {
+          throw new BadRequestError(`Too much, stahp.`)
+    }
+          return Game.merge(game, update).save()
     }
 
     @Get('/games')
@@ -38,7 +41,7 @@ export default class GameController {
         createGames(
         @Body() game: Game
     ) {
-        game.color = randomColor();
+        game.color = randomColor()
         return game.save()
     }
 }
