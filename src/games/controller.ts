@@ -1,14 +1,30 @@
-import { JsonController, Get, Param, Body, Post, HttpCode, Put } from 'routing-controllers'
+import { JsonController, Get, Param, Body, Post, HttpCode, Put, NotFoundError } from 'routing-controllers'
 import Game from './entity'
+
+const colors = ["red", "blue", "green", "yellow", "magenta"]
+const randomColor = () => {
+  return colors[Math.floor(Math.random() * colors.length)];
+}
+
+// const moves = (board1, board2) => 
+//   board1
+//     .map((row, y) => row.filter((cell, x) => board2[y][x] !== cell))
+//     .reduce((a, b) => a.concat(b))
+//     .length
 
 @JsonController()
 export default class GameController {
 
     @Put('/games/:id')
-    getGames(
-        @Param('id') id: number
+    async updateGame(
+        @Param('id') id: string,
+        @Body() update: Partial<Game>
     ) {
-        return Game.findOne(id)    
+        const game = await Game.findOne(id)
+        if (!game) throw new NotFoundError('Cannot find page')
+
+        game.color = randomColor();
+        return Game.merge(game, update).save()
     }
 
     @Get('/games')
@@ -23,20 +39,6 @@ export default class GameController {
         @Body() game: Game
     ) {
         game.color = randomColor();
-        // game.board = { board:[['o', 'o', 'o'], ['o', 'o', 'o'], ['o', 'o', 'o']]}
         return game.save()
     }
 }
-
-const colors = ["red", "blue", "green", "yellow", "magenta"]
-const randomColor = () => {
-  return colors[Math.floor(Math.random() * colors.length)];
-}
-
-
-// var random = colors[Math.floor(Math.random() * colors.length)]
-// console.log(colors)
-
-
-// insert into games (name, color, board) values
-//   ('Game 2.0', 'pink', 0);
